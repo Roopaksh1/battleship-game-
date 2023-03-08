@@ -1,4 +1,4 @@
-const SHIP_LENGTH = {
+export const SHIP_LENGTH = {
   carrier: 5,
   battleship: 4,
   destroyer: 3,
@@ -6,4 +6,4 @@ const SHIP_LENGTH = {
   patrolBoat: 2,
 }
 
-export default SHIP_LENGTH;
+export const BOARD_LENGTH = 10;
