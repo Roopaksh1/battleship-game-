@@ -1,6 +1,6 @@
 import { BOARD_LENGTH } from './helper';
 
-const gameBoard = () => {
+const GameBoard = () => {
   const board = Array(BOARD_LENGTH)
     .fill(null)
     .map(() => Array(BOARD_LENGTH).fill(null));
@@ -10,36 +10,55 @@ const gameBoard = () => {
   const getShipList = () => shipList;
   const getBoard = () => board;
 
-  const validCoordinates = (x, y, length, direction) => {
+  const validCoordinates = (row, col, length, direction) => {
     if (direction) {
-      return x + length <= BOARD_LENGTH;
+      return col + length < BOARD_LENGTH;
     }
-    return y + length <= BOARD_LENGTH;
+    return row + length < BOARD_LENGTH;
   };
 
-  const placeShip = (x, y, ship) => {
-    if (!validCoordinates(x, y, ship.length, ship.getDirection)) return -1;
-    if (ship.getDirection) {
-      for (let i = 0; i < ship.length; i + 1) {
-        board[x + i][y] = ship;
+  const alreadyPlaced = (row, col, length, direction) => {
+    if (direction) {
+      for (let i = 0; i < length; i += 1) {
+        if (board[row][col + i] != null) {
+          return 1;
+        }
       }
     } else {
-      for (let i = 0; i < ship.length; i + 1) {
-        board[x][y + i] = ship;
+      for (let i = 0; i < length; i += 1) {
+        if (board[row + i][col] != null) {
+          return 1;
+        }
       }
-      shipList.push({ ship, coordX: x, coordY: y });
+    }
+    return 0;
+  };
+
+  const placeShip = (row, col, ship) => {
+    if (!validCoordinates(row, col, ship.length, ship.getDirection()))
+      return -1;
+    if (alreadyPlaced(row, col, ship.length, ship.getDirection())) return -1;
+    if (ship.getDirection()) {
+      for (let i = 0; i < ship.length; i += 1) {
+        board[row][col + i] = ship;
+      }
+    } else {
+      for (let i = 0; i < ship.length; i += 1) {
+        board[row + i][col] = ship;
+      }
+      shipList.push({ ship, row, col });
     }
     return 1;
   };
 
-  const receiveAttack = (x, y) => {
-    if (board[x][y] === null) {
-      board[x][y] = 'miss';
+  const receiveAttack = (row, col) => {
+    if (board[row][col] === null) {
+      board[row][col] = 'miss';
       return 0;
     }
-    if (board[x][y] === 'miss') return -1;
-    board[x][y].hit();
-    board[x][y] = 'hit';
+    if (board[row][col] === 'miss' || board[row][col] === 'hit') return -1;
+    board[row][col].hit();
+    board[row][col] = 'hit';
     return 1;
   };
 
@@ -61,4 +80,4 @@ const gameBoard = () => {
   };
 };
 
-export default gameBoard;
+export default GameBoard;
