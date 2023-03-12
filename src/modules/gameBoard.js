@@ -52,6 +52,8 @@ const GameBoard = () => {
   };
 
   const receiveAttack = (row, col) => {
+    if (row < 0 || row >= BOARD_LENGTH || col < 0 || col >= BOARD_LENGTH)
+      return -1;
     if (board[row][col] === null) {
       board[row][col] = 'miss';
       return 0;
