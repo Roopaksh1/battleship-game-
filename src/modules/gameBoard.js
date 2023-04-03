@@ -12,21 +12,21 @@ const GameBoard = () => {
 
   const validCoordinates = (row, col, length, direction) => {
     if (direction) {
-      return col + length < BOARD_LENGTH;
+      return Number(col) + Number(length) <= BOARD_LENGTH;
     }
-    return row + length < BOARD_LENGTH;
+    return Number(row) + Number(length) < BOARD_LENGTH;
   };
 
   const alreadyPlaced = (row, col, length, direction) => {
     if (direction) {
       for (let i = 0; i < length; i += 1) {
-        if (board[row][col + i] != null) {
+        if (board[Number(row)][Number(col) + i] != null) {
           return 1;
         }
       }
     } else {
       for (let i = 0; i < length; i += 1) {
-        if (board[row + i][col] != null) {
+        if (board[Number(row) + i][Number(col)] != null) {
           return 1;
         }
       }
@@ -40,11 +40,11 @@ const GameBoard = () => {
     if (alreadyPlaced(row, col, ship.length, ship.getDirection())) return -1;
     if (ship.getDirection()) {
       for (let i = 0; i < ship.length; i += 1) {
-        board[row][col + i] = ship;
+        board[Number(row)][Number(col) + i] = ship;
       }
     } else {
       for (let i = 0; i < ship.length; i += 1) {
-        board[row + i][col] = ship;
+        board[Number(row) + i][Number(col)] = ship;
       }
       shipList.push({ ship, row, col });
     }
@@ -52,15 +52,15 @@ const GameBoard = () => {
   };
 
   const receiveAttack = (row, col) => {
-    if (row < 0 || row >= BOARD_LENGTH || col < 0 || col >= BOARD_LENGTH)
+    if (Number(row) < 0 || Number(row) >= BOARD_LENGTH || Number(col) < 0 || Number(col) >= BOARD_LENGTH)
       return -1;
-    if (board[row][col] === null) {
-      board[row][col] = 'miss';
+    if (board[Number(row)][Number(col)] === null) {
+      board[Number(row)][Number(col)] = 'miss';
       return 0;
     }
-    if (board[row][col] === 'miss' || board[row][col] === 'hit') return -1;
-    board[row][col].hit();
-    board[row][col] = 'hit';
+    if (board[Number(row)][Number(col)] === 'miss' || board[Number(row)][Number(col)] === 'hit') return -1;
+    board[Number(row)][Number(col)].hit();
+    board[Number(row)][Number(col)] = 'hit';
     return 1;
   };
 
