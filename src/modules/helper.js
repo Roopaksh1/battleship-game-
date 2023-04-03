@@ -12,4 +12,12 @@ export const randomCoord = () => {
   const row = Math.floor(Math.random() * 10);
   const col = Math.floor(Math.random() * 10);
   return [row, col];
-}
+};
+
+export const SHIP_LIST = [
+  'carrier',
+  'battleship',
+  'destroyer',
+  'submarine',
+  'patrolBoat',
+];
