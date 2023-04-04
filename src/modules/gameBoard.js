@@ -1,4 +1,5 @@
-import { BOARD_LENGTH } from './helper';
+import { BOARD_LENGTH, randomCoord } from './helper';
+import Ship from './ship';
 
 const GameBoard = () => {
   const board = Array(BOARD_LENGTH)
@@ -72,6 +73,17 @@ const GameBoard = () => {
     return true;
   };
 
+  const randomPlacement = (player) => {
+    let [row, col] = randomCoord();
+    while (player.getFleet().length !== 0) {
+      const ship = Ship(player.getFleet()[0]);
+      if (placeShip(row, col, ship) === 1) {
+        player.getFleet().shift();
+      } 
+      [row, col] = randomCoord();
+    }
+  }
+
   return {
     getShipList,
     getBoard,
@@ -79,6 +91,7 @@ const GameBoard = () => {
     placeShip,
     receiveAttack,
     isAllShipSunk,
+    randomPlacement,
   };
 };
 
