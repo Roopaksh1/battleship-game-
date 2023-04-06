@@ -2,7 +2,7 @@ import { randomCoord, SHIP_LIST } from './helper';
 
 const Player = (id = 'human') => {
   let turn = false;
-  let fleet = SHIP_LIST;
+  let fleet = [...SHIP_LIST];
   const setFleet = () => {
     fleet = SHIP_LIST;
   };
