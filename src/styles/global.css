@@ -1,0 +1,121 @@
+:root {
+  font-size: 62.5%;
+  --grid-color: #d8e2dc;
+  --background-color: #fee440;
+  --grid-hover-color: #f8edeb;
+  --ship-hover-color: #f4a261;
+  --carrier-color: #343a40;
+  --battleship-color: #354f52;
+  --destroyer-color: #52796f;
+  --submarine-color: #84a98c;
+  --patrolBoat-color: #6c757d;
+  --miss-color: #80ed99;
+  --hit-color: #d00000;
+  --overlay-color: rgba(0, 0, 0, 0.5);
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+h1 {
+  font-size: 10rem;
+  text-align: center;
+}
+
+.starting.board > div,
+.player1.board > div,
+.player2.board > div {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 10rem auto;
+  border: solid black 2px;
+  border-right: 0;
+  border-bottom: 0;
+  width: 60.4rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.grid {
+  background-color: var(--grid-color);
+  width: 6rem;
+  height: 6rem;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  cursor: pointer;
+}
+
+.grid:hover {
+  background-color: var(--grid-hover-color);
+}
+
+.grid.show-ship {
+  background-color: var(--ship-hover-color);
+}
+
+.grid[class*='carrier'] {
+  background-color: var(--carrier-color);
+}
+
+.grid[class*='battleship'] {
+  background-color: var(--battleship-color);
+}
+
+.grid[class*='destroyer'] {
+  background-color: var(--destroyer-color);
+}
+
+.grid[class*='submarine'] {
+  background-color: var(--submarine-color);
+}
+
+.grid[class*='patrolBoat'] {
+  background-color: var(--patrolBoat-color);
+}
+
+.grid[class*='miss'] {
+  background-color: var(--miss-color);
+}
+
+.grid[class*='hit'] {
+  background-color: var(--hit-color);
+}
+
+.message-container.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--overlay-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.message-box {
+  font-size: 4rem;
+  margin-bottom: 3rem;
+  color: aqua;
+  letter-spacing: 5px;
+}
+
+.rematch {
+  border: none;
+  cursor: pointer;
+  padding: 2rem;
+  font-size: 2rem;
+}
