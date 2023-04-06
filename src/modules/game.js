@@ -1,3 +1,4 @@
+import { clearScreen, renderBoard, renderMessageBox } from './dom';
 import GameBoard from './gameBoard';
 import Player from './player';
 
@@ -18,10 +19,53 @@ const Game = () => {
     cpu = Player('computer');
     p1Board = GameBoard();
     cpuBoard = GameBoard();
+    cpuBoard.randomPlacement(cpu);
   };
 
-  const isGameOver = () =>
-    getP1Board.isAllShipSunk() || getP2Board.isAllShipSunk();
+  const isGameOver = () => p1Board.isAllShipSunk() || cpuBoard.isAllShipSunk();
+
+  const loadGame = (game) => {
+    renderBoard(
+      document.querySelector('.player1.board'),
+      p1Board,
+      player1,
+      true,
+      game
+    );
+    renderBoard(
+      document.querySelector('.player2.board'),
+      cpuBoard,
+      cpu,
+      true,
+      game
+    );
+  };
+
+  const startGame = (row, col, game) => {
+    cpuBoard.receiveAttack(row, col);
+    loadGame(game);
+    if (isGameOver()) {
+      renderMessageBox('You Won', game);
+      return;
+    }
+    cpu.compAttack(p1Board);
+    loadGame(game);
+    if (isGameOver()) {
+      renderMessageBox('Computer Won', game);
+    }
+  };
+
+  function restart() {
+    clearScreen();
+    initGame();
+    renderBoard(
+      document.querySelector('.starting.board'),
+      getP1Board(),
+      getplayer1(),
+      false,
+      this
+    );
+  };
 
   return {
     getP1Board,
@@ -30,6 +74,9 @@ const Game = () => {
     getplayer2,
     initGame,
     isGameOver,
+    loadGame,
+    startGame,
+    restart,
   };
 };
 
