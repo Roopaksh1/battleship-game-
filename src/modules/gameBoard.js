@@ -47,8 +47,8 @@ const GameBoard = () => {
       for (let i = 0; i < ship.length; i += 1) {
         board[Number(row) + i][Number(col)] = ship;
       }
-      shipList.push({ ship, row, col });
     }
+    shipList.push({ ship, row, col });
     return 1;
   };
 
